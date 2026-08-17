@@ -41,6 +41,15 @@ Absolute path → starts from root, e.g. /home/user/notes.md
 Relative path → interpreted from current working directory
 ```
 
+### Links and Permissions
+
+```text
+Hard link    → another directory entry for the same underlying file/inode
+Symbolic link→ separate small file containing a path to a target
+```
+
+A hard link remains valid if another name is removed while the file still has links; a symbolic link can become dangling if its target disappears. Basic permissions control who may read, write, or execute a file/directory.
+
 ## 4. Access Methods
 
 ```text
@@ -89,7 +98,7 @@ Journaling improves consistency/recovery; it does not magically protect against 
 
 ## 8. Disk Basics and Scheduling
 
-Storage performance historically depended heavily on disk-head movement.
+Storage is addressed as blocks/sectors. HDDs use rotating platters and a moving head; SSDs use flash memory, so they have no seek or rotational delay and are much faster for random access.
 
 ```text
 Seek time       → move head to track
@@ -104,9 +113,13 @@ FCFS  → request order
 SSTF  → nearest request first; may starve far requests
 SCAN  → elevator: sweep in one direction, then reverse
 C-SCAN→ sweep one direction; return without servicing
+LOOK  → like SCAN, but reverse at last pending request, not physical end
+C-LOOK→ like C-SCAN, but jump from last pending request to first pending request
 ```
 
 SSDs have no rotating head, but OS I/O scheduling and queueing still matter.
+
+**How to solve a disk-scheduling question:** draw the request positions and current head; follow the stated direction. Add absolute head movements between consecutive positions. For SCAN/C-SCAN, include the disk end only when the question's convention requires it; LOOK/C-LOOK stop at the last pending request.
 
 ## 9. RAID — Basic Idea
 

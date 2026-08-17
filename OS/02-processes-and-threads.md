@@ -67,7 +67,7 @@ Parent
   └── creates → Child
 ```
 
-On Unix-like systems, `fork()` conceptually creates a child; `exec()` replaces its program image. Modern systems commonly use **copy-on-write** so memory is not fully copied immediately.
+On Unix-like systems, `fork()` conceptually creates a child that continues from the same point as its parent; `exec()` replaces that process's program image. `wait()` lets a parent collect a terminated child's status. Modern systems commonly use **copy-on-write** so memory is not fully copied immediately.
 
 **Zombie:** child has exited, but parent has not collected its exit status.  
 **Orphan:** parent exits before child; OS/adopter process takes responsibility.
@@ -101,6 +101,15 @@ Resource share → threads naturally share process data
 ```
 
 But shared memory introduces race conditions and synchronization needs.
+
+### Concurrency vs Parallelism
+
+```text
+Concurrency → multiple tasks make progress during overlapping time periods
+Parallelism  → multiple tasks execute at the same instant on multiple CPU cores
+```
+
+One CPU can provide concurrency by switching rapidly. Parallelism requires more than one execution resource.
 
 ## 8. User-Level vs Kernel-Level Threads
 

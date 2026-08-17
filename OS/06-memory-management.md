@@ -44,6 +44,23 @@ External fragmentation → free memory exists but is split into small holes
 
 **Compaction** can combine external holes, but moving memory is expensive and requires relocation support.
 
+### Fixed vs Variable Partitions and Fit Strategies
+
+```text
+Fixed partitions    → predefined block sizes; simple, internal fragmentation
+Variable partitions → allocate requested-sized region; external fragmentation
+```
+
+When variable-size holes exist:
+
+```text
+First fit → first hole large enough; fast and common
+Best fit  → smallest adequate hole; can leave many tiny holes
+Worst fit → largest hole; leaves a large remainder, often not best in practice
+```
+
+**How to solve:** scan the free-hole list in the order stated, apply the selected rule, then reduce that hole by the allocated size.
+
 ## 5. Paging ⭐⭐⭐
 
 Paging splits virtual memory into fixed-size **pages** and physical memory into equal-size **frames**.
@@ -100,6 +117,12 @@ Segmentation→ logical variable-size units; programmer-view friendly
 
 Modern systems commonly use paging, sometimes with segmentation concepts or limited hardware support.
 
+| Paging | Segmentation |
+|---|---|
+| Fixed-size pages | Variable-size logical segments |
+| Avoids external fragmentation | Can suffer external fragmentation |
+| Transparent to most programs | Mirrors logical units such as code/data |
+
 ## 8. Virtual Memory and Demand Paging ⭐⭐⭐
 
 **Virtual memory** lets a process use an address space larger than physical RAM by keeping inactive pages on disk and loading pages on demand.
@@ -115,6 +138,20 @@ Page fault → OS loads page from disk → restart instruction
 
 A page fault is normal in demand paging, but is much slower than RAM access.
 
+### What the OS Does on a Page Fault
+
+```text
+Reference absent page
+  ↓
+Trap to OS; check that reference is valid
+  ↓
+Find free frame or select a victim (write victim if dirty)
+  ↓
+Read needed page into frame; update page table/TLB
+  ↓
+Restart the faulting instruction
+```
+
 ## 9. Page Replacement ⭐⭐⭐
 
 If RAM has no free frame, OS chooses a victim page.
@@ -127,6 +164,8 @@ If RAM has no free frame, OS chooses a victim page.
 | Clock / second chance | FIFO-like with reference bit | practical LRU approximation |
 
 **Belady's anomaly:** with FIFO, increasing frames can sometimes increase page faults. It does not occur in stack algorithms such as optimal/LRU.
+
+**How to solve a replacement question:** write the reference string one item at a time, show the current frames after every reference, and mark a fault whenever the referenced page is absent. For optimal, look forward; for LRU, look backward; for FIFO, evict the earliest-loaded page.
 
 ## 10. Thrashing and Working Set
 

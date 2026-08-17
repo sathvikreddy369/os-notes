@@ -43,6 +43,8 @@ Processes are isolated, so they need explicit **IPC** to exchange data or coordi
 | Shared memory | processes map a common region; very fast but needs synchronization |
 | Message passing | OS transfers messages; simpler isolation boundary |
 | Pipe | byte stream, often parent-child/local pipeline |
+| Named pipe (FIFO) | pipe with a filesystem name; unrelated local processes can use it |
+| Message queue | kernel-managed discrete messages, often with ordering/priority support |
 | Socket | communication endpoint; local or networked |
 | Signal | lightweight asynchronous notification |
 
@@ -95,6 +97,11 @@ Capabilities → subject holds unforgeable permission/reference
 Hardware → Hypervisor → Guest OS + apps (VM 1, VM 2, ...)
 ```
 
+```text
+Type 1 hypervisor → runs directly on hardware
+Type 2 hypervisor → runs on top of a host OS
+```
+
 **Container:** isolates application environments while sharing the host kernel.
 
 ```text
@@ -105,11 +112,7 @@ Hardware → Host OS kernel → Containers + apps
 |---|---|
 | Includes guest OS | Shares host kernel |
 | Stronger hardware-level isolation | Lighter/faster start |
-| More resource overhead | Less OS-kernel diversity |
-
-## 8. Distributed-System Basics
-
-Networked systems cannot assume messages arrive once, in order, or at all. A process failure and a network delay may look similar from another machine. This is why timeouts, retries, idempotency, and replication matter in real systems.
+| More resource overhead | Must use the host kernel family |
 
 ## 🧠 One-Minute Revision
 
@@ -120,6 +123,8 @@ DMA → controller moves blocks between device and RAM
 Buffer → smooth transfer
 Cache → speed future reuse
 IPC → communication between isolated processes
+Named pipe / message queue → local IPC options beyond an anonymous pipe
 VM → guest OS per virtual hardware
 Container → isolated apps sharing host kernel
+Type 1 / Type 2 → hypervisor on hardware / on a host OS
 ```

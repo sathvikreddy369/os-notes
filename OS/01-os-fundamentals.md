@@ -80,6 +80,7 @@ Result returned to app
 |---|---|---|
 | Monolithic kernel | Most OS services run in kernel space | Fast, but large trusted kernel |
 | Microkernel | Keep only essentials in kernel; services in user space | Better isolation, IPC overhead |
+| Hybrid kernel | Mixes monolithic performance with microkernel-style ideas | Practical compromise in many systems |
 | Layered | Each layer uses lower layers | Easier reasoning |
 | Modular | Loadable kernel components | Practical modern approach |
 

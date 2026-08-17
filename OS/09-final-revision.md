@@ -9,6 +9,11 @@ Thread  → execution unit within process; shares memory/files; lighter
 
 Threads share code, heap, and open files, but each needs its own stack, registers, and program counter.
 
+```text
+Concurrency → overlapping progress; possible on one CPU
+Parallelism  → simultaneous execution; needs multiple execution resources
+```
+
 ## 2. Program vs Process ⭐⭐⭐
 
 ```text
@@ -43,6 +48,13 @@ Turnaround = completion − arrival
 Waiting    = turnaround − CPU burst
 Response   = first start − arrival
 ```
+
+```text
+AT → arrival time     BT → CPU burst time     CT → completion time
+CPU burst → executing   I/O burst → waiting for an I/O event
+```
+
+For calculation questions: make the Gantt chart first, then calculate each process's CT, TAT, WT, and response time. In RR, requeue unfinished work after each quantum.
 
 ## 6. Race Condition, Mutex and Semaphore ⭐⭐⭐
 
@@ -91,6 +103,20 @@ TLB miss  → translation not cached; page may still be in RAM
 Page fault→ referenced page absent from RAM; OS must load it
 ```
 
+```text
+Page fault flow → validate reference → find/replace frame → disk read → update mapping → restart instruction
+```
+
+### Contiguous Allocation ⭐⭐
+
+```text
+Internal fragmentation → waste inside allocated block
+External fragmentation → free space split into holes
+First fit → first adequate hole
+Best fit → smallest adequate hole
+Worst fit → largest adequate hole
+```
+
 ## 9. Page Replacement ⭐⭐
 
 ```text
@@ -101,12 +127,19 @@ LRU     → least recent use; locality-based
 
 **Thrashing:** heavy page faults leave little time for useful execution.
 
+For replacement calculations, show frames after every reference. FIFO evicts oldest-loaded; LRU evicts least-recently used; optimal evicts the page used farthest in the future.
+
 ## 10. File System ⭐⭐
 
 ```text
 File descriptor → process-local handle to an opened file
 Inode           → file metadata + pointers to data blocks
 Directory       → maps names to file metadata references
+```
+
+```text
+Hard link → another name for the same inode/file
+Soft link → path-based reference; may become dangling
 ```
 
 ```text
@@ -123,7 +156,30 @@ Shared memory → fast IPC but needs synchronization
 Message passing → explicit OS-mediated communication
 ```
 
-## 12. Common Interview Answers
+```text
+Pipe → local byte stream
+Named pipe → pipe usable by unrelated local processes
+Message queue → discrete kernel-managed messages
+Socket → local or network communication endpoint
+```
+
+## 12. Disk Scheduling and Virtualization ⭐
+
+```text
+SSTF  → nearest request; starvation possible
+SCAN  → sweep then reverse
+C-SCAN→ one-direction service, then return
+LOOK/C-LOOK → stop at last request rather than disk end
+```
+
+```text
+Type 1 hypervisor → directly on hardware
+Type 2 hypervisor → runs on host OS
+VM → guest OS per virtual hardware
+Container → isolated app environment sharing host kernel
+```
+
+## 13. Common Interview Answers
 
 ### What is a system call?
 
@@ -149,6 +205,10 @@ Message passing → explicit OS-mediated communication
 
 > A mutex is an ownership-based mutual-exclusion lock. A semaphore is a counter/signaling primitive and can represent multiple available resources.
 
+### TLB miss vs page fault?
+
+> A TLB miss means a translation was not in the fast TLB cache; the page table may still show that the page is in RAM. A page fault means the referenced page is absent from RAM.
+
 ## 🔥 Final OS Priority List
 
 ### 🔴 High Priority — Know Very Well
@@ -172,7 +232,7 @@ Message passing → explicit OS-mediated communication
 14. Segmentation, multilevel paging, copy-on-write
 15. Disk scheduling, journaling, RAID basics
 16. DMA, buffering/caching/spooling, IPC
-17. Virtual machines vs containers
+17. Disk scheduling; virtual machines vs containers
 
 ### 🟢 Low Priority — Do Not Overinvest
 

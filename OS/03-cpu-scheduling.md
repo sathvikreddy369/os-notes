@@ -8,10 +8,20 @@ When more ready processes exist than CPU cores, the scheduler chooses the next o
 Ready queue → Short-term scheduler → CPU
 ```
 
+Processes usually alternate between a **CPU burst** (execution) and an **I/O burst** (waiting for disk, network, etc.). A process that begins I/O leaves the CPU so another ready process can run.
+
 **Preemptive:** OS may take CPU from a running process.  
 **Non-preemptive:** process keeps CPU until it exits or blocks.
 
 ## 2. Scheduling Criteria
+
+For a scheduling question, first identify:
+
+```text
+Arrival time (AT)    → when process enters ready queue
+CPU burst time (BT)  → CPU time it needs
+Completion time (CT) → when it finishes
+```
 
 ```text
 CPU utilization → keep CPU busy
@@ -87,6 +97,23 @@ Response   = First start − Arrival
 ```
 
 > For RR, include every preemption slice in the Gantt chart before calculating.
+
+### Small Worked Pattern
+
+For FCFS, if all arrive at time `0` and burst times are `P1=3, P2=1, P3=2`:
+
+```text
+0       3   4     6
+|  P1   | P2|  P3 |
+```
+
+```text
+CT: P1=3, P2=4, P3=6
+TAT: 3, 4, 6                 (CT − AT)
+WT:  0, 3, 4                 (TAT − BT)
+```
+
+For SJF/SRTF choose the shortest eligible burst/remaining time at each decision. For priority choose the highest-priority eligible process (state clearly whether a smaller number means higher priority). For RR, run the front process for `min(quantum, remaining burst)` and requeue it if work remains.
 
 ## 🧠 One-Minute Revision
 
