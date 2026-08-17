@@ -4,6 +4,8 @@
 
 Programs should not need to know every device's hardware protocol. A **device driver** is OS software that translates generic OS requests into device-specific commands.
 
+A **device controller** is the hardware interface that controls a device and exposes registers/buffers to the CPU. The driver is the OS software that operates that controller.
+
 ```text
 Application
     ↓
@@ -61,7 +63,19 @@ Client process  ↔  socket  ↔  network/local OS  ↔  socket  ↔  server pro
 
 A socket is an endpoint/API for communication. It is not the same as a WebSocket protocol.
 
-## 6. Protection and Security ⭐⭐⭐
+## 6. System Calls in Practice and Memory-Mapped Files
+
+Common system-call families are `open/read/write/close` for files, process-creation/wait calls, and socket calls for communication. Applications usually call a language library, which may invoke the relevant system call.
+
+A **memory-mapped file** maps a file region into a process's virtual address space.
+
+```text
+File on storage → mapped virtual pages → program reads/writes memory
+```
+
+This is useful for efficient random access and sharing data between processes, but normal memory protection and synchronization rules still apply.
+
+## 7. Protection and Security ⭐⭐⭐
 
 The OS enforces **protection**: which subject can access which object.
 
@@ -89,7 +103,14 @@ ACL  → object stores who can do what (e.g., file permissions)
 Capabilities → subject holds unforgeable permission/reference
 ```
 
-## 7. Virtualization and Containers ⭐⭐
+## 8. Multiprocessing, Multicore, Virtualization and Containers ⭐⭐
+
+```text
+Multiprocessing → system uses more than one processor/core
+Multicore       → one physical CPU chip contains multiple cores
+```
+
+Multiple cores make true parallel execution possible, but do not remove the need for synchronization when data is shared.
 
 **Virtual machine (VM):** virtualizes hardware so each guest runs its own OS.
 
@@ -124,6 +145,8 @@ Buffer → smooth transfer
 Cache → speed future reuse
 IPC → communication between isolated processes
 Named pipe / message queue → local IPC options beyond an anonymous pipe
+Memory-mapped file → file region accessed through virtual memory
+Multicore → multiple CPU cores; enables parallelism
 VM → guest OS per virtual hardware
 Container → isolated apps sharing host kernel
 Type 1 / Type 2 → hypervisor on hardware / on a host OS

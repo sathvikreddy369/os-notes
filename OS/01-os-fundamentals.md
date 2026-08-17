@@ -14,6 +14,14 @@ CPU | Memory | Disk | Network | Devices
 
 Without an OS, every program would need to control hardware directly.
 
+### Goals
+
+```text
+Convenience → make hardware practical to use
+Efficiency  → use CPU, memory, and devices well
+Protection  → isolate users/processes and control access
+```
+
 ## 2. Main Responsibilities
 
 ```text
@@ -25,6 +33,16 @@ Protection          → isolate users and programs
 ```
 
 The OS is both a **resource manager** and a **control program**.
+
+### Core Components
+
+```text
+Kernel / scheduler     → CPU and process control
+Memory manager         → address spaces and RAM allocation
+File system            → persistent files/directories
+I/O subsystem + drivers→ device access
+Security/protection    → permissions and isolation
+```
 
 ## 3. Kernel vs User Space ⭐⭐⭐
 

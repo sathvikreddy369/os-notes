@@ -81,6 +81,8 @@ Preempt resources (when possible)
 Roll back a process to a checkpoint
 ```
 
+For a single instance of each resource type, cycle detection in the resource-allocation graph is enough. With multiple instances, use an availability/allocation check: repeatedly find a process whose remaining request can be satisfied, pretend it finishes and releases resources; processes left over are deadlocked.
+
 ## 5. Deadlock vs Starvation ⭐⭐⭐
 
 ```text

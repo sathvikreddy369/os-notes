@@ -33,6 +33,11 @@ Waiting → blocked for I/O/event
 
 OS saves one task's CPU state and restores another's. It enables multitasking but adds overhead.
 
+```text
+Multithreading benefits → responsiveness and parallel work
+Main risk → shared data needs synchronization
+```
+
 ## 5. Scheduling ⭐⭐⭐
 
 ```text
@@ -143,6 +148,11 @@ Soft link → path-based reference; may become dangling
 ```
 
 ```text
+Single-level / two-level / tree → directory-organization forms
+Tree → the standard practical hierarchical model
+```
+
+```text
 RAID improves availability/performance in some configurations
 RAID does not replace backup
 ```
@@ -161,6 +171,7 @@ Pipe → local byte stream
 Named pipe → pipe usable by unrelated local processes
 Message queue → discrete kernel-managed messages
 Socket → local or network communication endpoint
+Memory-mapped file → access file contents through mapped virtual memory
 ```
 
 ## 12. Disk Scheduling and Virtualization ⭐

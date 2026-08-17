@@ -102,6 +102,13 @@ Resource share → threads naturally share process data
 
 But shared memory introduces race conditions and synchronization needs.
 
+### Benefits and Problems of Multithreading
+
+```text
+Benefits → responsiveness, parallel work, convenient resource sharing
+Problems → races, deadlocks, harder debugging, one thread can crash the process
+```
+
 ### Concurrency vs Parallelism
 
 ```text

@@ -41,6 +41,14 @@ Absolute path → starts from root, e.g. /home/user/notes.md
 Relative path → interpreted from current working directory
 ```
 
+Common organization forms:
+
+```text
+Single-level → every file in one directory; name conflicts
+Two-level    → separate directory per user
+Tree         → hierarchical directories; standard practical model
+```
+
 ### Links and Permissions
 
 ```text
